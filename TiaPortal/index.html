@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!-- AWP_In_Variable Name='"tag1"' -->
+
+<!-- AWP_In_Variable Name='"Wejscia_PLC".Temperatura_wewnetrzna' -->
+<!-- AWP_In_Variable Name='"Wejscia_PLC".Czujnik_wilgotności_powietrza' -->
+<!-- AWP_In_Variable Name='"Wejscia_PLC".Czujnik_wilgotności_gleby' -->
+<!-- AWP_In_Variable Name='"Wejscia_PLC".Czujnik_natezenia_swiatła' -->
+<!-- AWP_In_Variable Name='"Wejscia_PLC".Wewnetrzny_czujnik_CO2' -->
+<!-- AWP_In_Variable Name='"Archiwizowane_parametry".Temperatura' -->
+<!-- AWP_In_Variable Name='"Archiwizowane_parametry".Wilgotnosc' -->
+<!-- AWP_In_Variable Name='"Archiwizowane_parametry".Naslonecznienie' -->
+
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Szklarnia</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    canvas {
+      max-width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+	<h2>
+            <form>
+		Aktualne wartości:
+                <input type="hidden" name='"tag1"' value="0">
+                <input type="submit" value="ODŚWIEŻ">
+            </form>
+        </h2>
+
+<h3>Temperatura wewnętrzna: <span style="color: blue">:="Wejscia_PLC".Temperatura_wewnetrzna:</span>°C, 
+Wilgotność powietrza: <span style="color: blue">:="Wejscia_PLC".Czujnik_wilgotności_powietrza:</span>%, 
+Wilgotność gleby: <span style="color: blue">:="Wejscia_PLC".Czujnik_wilgotności_gleby:</span>%, 
+Natężenie światła: <span style="color: blue">:="Wejscia_PLC".Czujnik_natezenia_swiatła:</span> W/m2, 
+Stężenie CO2: <span style="color: blue">:="Wejscia_PLC".Wewnetrzny_czujnik_CO2:</span> ppm</h3>
+
+
+  <h2><form>
+	Temperatura, nasłonecznienie i wilgotność w szklarni (dane z ostatniego tygodnia)
+	<input type="hidden" name='"tag1"' value="0">
+	<input type="submit" value="ODŚWIEŻ">
+  </form></h2>
+  <canvas id="paramChart" width="1000" height="350"></canvas>
+
+  <script>
+    const temperatura = [":="Archiwizowane_parametry".Temperatura[0]:", ":="Archiwizowane_parametry".Temperatura[1]:", ":="Archiwizowane_parametry".Temperatura[2]:", ":="Archiwizowane_parametry".Temperatura[3]:", ":="Archiwizowane_parametry".Temperatura[4]:", ":="Archiwizowane_parametry".Temperatura[5]:", ":="Archiwizowane_parametry".Temperatura[6]:", ":="Archiwizowane_parametry".Temperatura[7]:", ":="Archiwizowane_parametry".Temperatura[8]:", ":="Archiwizowane_parametry".Temperatura[9]:", ":="Archiwizowane_parametry".Temperatura[10]:", ":="Archiwizowane_parametry".Temperatura[11]:", ":="Archiwizowane_parametry".Temperatura[12]:", ":="Archiwizowane_parametry".Temperatura[13]:", ":="Archiwizowane_parametry".Temperatura[14]:", ":="Archiwizowane_parametry".Temperatura[15]:", ":="Archiwizowane_parametry".Temperatura[16]:", ":="Archiwizowane_parametry".Temperatura[17]:", ":="Archiwizowane_parametry".Temperatura[18]:", ":="Archiwizowane_parametry".Temperatura[19]:", ":="Archiwizowane_parametry".Temperatura[20]:", ":="Archiwizowane_parametry".Temperatura[21]:", ":="Archiwizowane_parametry".Temperatura[22]:", ":="Archiwizowane_parametry".Temperatura[23]:", ":="Archiwizowane_parametry".Temperatura[24]:", ":="Archiwizowane_parametry".Temperatura[25]:", ":="Archiwizowane_parametry".Temperatura[26]:", ":="Archiwizowane_parametry".Temperatura[27]:", ":="Archiwizowane_parametry".Temperatura[28]:", ":="Archiwizowane_parametry".Temperatura[29]:", ":="Archiwizowane_parametry".Temperatura[30]:", ":="Archiwizowane_parametry".Temperatura[31]:", ":="Archiwizowane_parametry".Temperatura[32]:", ":="Archiwizowane_parametry".Temperatura[33]:", ":="Archiwizowane_parametry".Temperatura[34]:", ":="Archiwizowane_parametry".Temperatura[35]:", ":="Archiwizowane_parametry".Temperatura[36]:", ":="Archiwizowane_parametry".Temperatura[37]:", ":="Archiwizowane_parametry".Temperatura[38]:", ":="Archiwizowane_parametry".Temperatura[39]:", ":="Archiwizowane_parametry".Temperatura[40]:", ":="Archiwizowane_parametry".Temperatura[41]:", ":="Archiwizowane_parametry".Temperatura[42]:", ":="Archiwizowane_parametry".Temperatura[43]:", ":="Archiwizowane_parametry".Temperatura[44]:", ":="Archiwizowane_parametry".Temperatura[45]:", ":="Archiwizowane_parametry".Temperatura[46]:", ":="Archiwizowane_parametry".Temperatura[47]:", ":="Archiwizowane_parametry".Temperatura[48]:", ":="Archiwizowane_parametry".Temperatura[49]:", ":="Archiwizowane_parametry".Temperatura[50]:", ":="Archiwizowane_parametry".Temperatura[51]:", ":="Archiwizowane_parametry".Temperatura[52]:", ":="Archiwizowane_parametry".Temperatura[53]:", ":="Archiwizowane_parametry".Temperatura[54]:", ":="Archiwizowane_parametry".Temperatura[55]:", ":="Archiwizowane_parametry".Temperatura[56]:", ":="Archiwizowane_parametry".Temperatura[57]:", ":="Archiwizowane_parametry".Temperatura[58]:", ":="Archiwizowane_parametry".Temperatura[59]:", ":="Archiwizowane_parametry".Temperatura[60]:", ":="Archiwizowane_parametry".Temperatura[61]:", ":="Archiwizowane_parametry".Temperatura[62]:", ":="Archiwizowane_parametry".Temperatura[63]:", ":="Archiwizowane_parametry".Temperatura[64]:", ":="Archiwizowane_parametry".Temperatura[65]:", ":="Archiwizowane_parametry".Temperatura[66]:", ":="Archiwizowane_parametry".Temperatura[67]:", ":="Archiwizowane_parametry".Temperatura[68]:", ":="Archiwizowane_parametry".Temperatura[69]:", ":="Archiwizowane_parametry".Temperatura[70]:", ":="Archiwizowane_parametry".Temperatura[71]:", ":="Archiwizowane_parametry".Temperatura[72]:", ":="Archiwizowane_parametry".Temperatura[73]:", ":="Archiwizowane_parametry".Temperatura[74]:", ":="Archiwizowane_parametry".Temperatura[75]:", ":="Archiwizowane_parametry".Temperatura[76]:", ":="Archiwizowane_parametry".Temperatura[77]:", ":="Archiwizowane_parametry".Temperatura[78]:", ":="Archiwizowane_parametry".Temperatura[79]:", ":="Archiwizowane_parametry".Temperatura[80]:", ":="Archiwizowane_parametry".Temperatura[81]:", ":="Archiwizowane_parametry".Temperatura[82]:", ":="Archiwizowane_parametry".Temperatura[83]:", ":="Archiwizowane_parametry".Temperatura[84]:", ":="Archiwizowane_parametry".Temperatura[85]:", ":="Archiwizowane_parametry".Temperatura[86]:", ":="Archiwizowane_parametry".Temperatura[87]:", ":="Archiwizowane_parametry".Temperatura[88]:", ":="Archiwizowane_parametry".Temperatura[89]:", ":="Archiwizowane_parametry".Temperatura[90]:", ":="Archiwizowane_parametry".Temperatura[91]:", ":="Archiwizowane_parametry".Temperatura[92]:", ":="Archiwizowane_parametry".Temperatura[93]:", ":="Archiwizowane_parametry".Temperatura[94]:", ":="Archiwizowane_parametry".Temperatura[95]:", ":="Archiwizowane_parametry".Temperatura[96]:", ":="Archiwizowane_parametry".Temperatura[97]:", ":="Archiwizowane_parametry".Temperatura[98]:", ":="Archiwizowane_parametry".Temperatura[99]:", ":="Archiwizowane_parametry".Temperatura[100]:", ":="Archiwizowane_parametry".Temperatura[101]:", ":="Archiwizowane_parametry".Temperatura[102]:", ":="Archiwizowane_parametry".Temperatura[103]:", ":="Archiwizowane_parametry".Temperatura[104]:", ":="Archiwizowane_parametry".Temperatura[105]:", ":="Archiwizowane_parametry".Temperatura[106]:", ":="Archiwizowane_parametry".Temperatura[107]:", ":="Archiwizowane_parametry".Temperatura[108]:", ":="Archiwizowane_parametry".Temperatura[109]:", ":="Archiwizowane_parametry".Temperatura[110]:", ":="Archiwizowane_parametry".Temperatura[111]:"];
+    const naslonecznienie = [":="Archiwizowane_parametry".Naslonecznienie[0]:", ":="Archiwizowane_parametry".Naslonecznienie[1]:", ":="Archiwizowane_parametry".Naslonecznienie[2]:", ":="Archiwizowane_parametry".Naslonecznienie[3]:", ":="Archiwizowane_parametry".Naslonecznienie[4]:", ":="Archiwizowane_parametry".Naslonecznienie[5]:", ":="Archiwizowane_parametry".Naslonecznienie[6]:", ":="Archiwizowane_parametry".Naslonecznienie[7]:", ":="Archiwizowane_parametry".Naslonecznienie[8]:", ":="Archiwizowane_parametry".Naslonecznienie[9]:", ":="Archiwizowane_parametry".Naslonecznienie[10]:", ":="Archiwizowane_parametry".Naslonecznienie[11]:", ":="Archiwizowane_parametry".Naslonecznienie[12]:", ":="Archiwizowane_parametry".Naslonecznienie[13]:", ":="Archiwizowane_parametry".Naslonecznienie[14]:", ":="Archiwizowane_parametry".Naslonecznienie[15]:", ":="Archiwizowane_parametry".Naslonecznienie[16]:", ":="Archiwizowane_parametry".Naslonecznienie[17]:", ":="Archiwizowane_parametry".Naslonecznienie[18]:", ":="Archiwizowane_parametry".Naslonecznienie[19]:", ":="Archiwizowane_parametry".Naslonecznienie[20]:", ":="Archiwizowane_parametry".Naslonecznienie[21]:", ":="Archiwizowane_parametry".Naslonecznienie[22]:", ":="Archiwizowane_parametry".Naslonecznienie[23]:", ":="Archiwizowane_parametry".Naslonecznienie[24]:", ":="Archiwizowane_parametry".Naslonecznienie[25]:", ":="Archiwizowane_parametry".Naslonecznienie[26]:", ":="Archiwizowane_parametry".Naslonecznienie[27]:", ":="Archiwizowane_parametry".Naslonecznienie[28]:", ":="Archiwizowane_parametry".Naslonecznienie[29]:", ":="Archiwizowane_parametry".Naslonecznienie[30]:", ":="Archiwizowane_parametry".Naslonecznienie[31]:", ":="Archiwizowane_parametry".Naslonecznienie[32]:", ":="Archiwizowane_parametry".Naslonecznienie[33]:", ":="Archiwizowane_parametry".Naslonecznienie[34]:", ":="Archiwizowane_parametry".Naslonecznienie[35]:", ":="Archiwizowane_parametry".Naslonecznienie[36]:", ":="Archiwizowane_parametry".Naslonecznienie[37]:", ":="Archiwizowane_parametry".Naslonecznienie[38]:", ":="Archiwizowane_parametry".Naslonecznienie[39]:", ":="Archiwizowane_parametry".Naslonecznienie[40]:", ":="Archiwizowane_parametry".Naslonecznienie[41]:", ":="Archiwizowane_parametry".Naslonecznienie[42]:", ":="Archiwizowane_parametry".Naslonecznienie[43]:", ":="Archiwizowane_parametry".Naslonecznienie[44]:", ":="Archiwizowane_parametry".Naslonecznienie[45]:", ":="Archiwizowane_parametry".Naslonecznienie[46]:", ":="Archiwizowane_parametry".Naslonecznienie[47]:", ":="Archiwizowane_parametry".Naslonecznienie[48]:", ":="Archiwizowane_parametry".Naslonecznienie[49]:", ":="Archiwizowane_parametry".Naslonecznienie[50]:", ":="Archiwizowane_parametry".Naslonecznienie[51]:", ":="Archiwizowane_parametry".Naslonecznienie[52]:", ":="Archiwizowane_parametry".Naslonecznienie[53]:", ":="Archiwizowane_parametry".Naslonecznienie[54]:", ":="Archiwizowane_parametry".Naslonecznienie[55]:", ":="Archiwizowane_parametry".Naslonecznienie[56]:", ":="Archiwizowane_parametry".Naslonecznienie[57]:", ":="Archiwizowane_parametry".Naslonecznienie[58]:", ":="Archiwizowane_parametry".Naslonecznienie[59]:", ":="Archiwizowane_parametry".Naslonecznienie[60]:", ":="Archiwizowane_parametry".Naslonecznienie[61]:", ":="Archiwizowane_parametry".Naslonecznienie[62]:", ":="Archiwizowane_parametry".Naslonecznienie[63]:", ":="Archiwizowane_parametry".Naslonecznienie[64]:", ":="Archiwizowane_parametry".Naslonecznienie[65]:", ":="Archiwizowane_parametry".Naslonecznienie[66]:", ":="Archiwizowane_parametry".Naslonecznienie[67]:", ":="Archiwizowane_parametry".Naslonecznienie[68]:", ":="Archiwizowane_parametry".Naslonecznienie[69]:", ":="Archiwizowane_parametry".Naslonecznienie[70]:", ":="Archiwizowane_parametry".Naslonecznienie[71]:", ":="Archiwizowane_parametry".Naslonecznienie[72]:", ":="Archiwizowane_parametry".Naslonecznienie[73]:", ":="Archiwizowane_parametry".Naslonecznienie[74]:", ":="Archiwizowane_parametry".Naslonecznienie[75]:", ":="Archiwizowane_parametry".Naslonecznienie[76]:", ":="Archiwizowane_parametry".Naslonecznienie[77]:", ":="Archiwizowane_parametry".Naslonecznienie[78]:", ":="Archiwizowane_parametry".Naslonecznienie[79]:", ":="Archiwizowane_parametry".Naslonecznienie[80]:", ":="Archiwizowane_parametry".Naslonecznienie[81]:", ":="Archiwizowane_parametry".Naslonecznienie[82]:", ":="Archiwizowane_parametry".Naslonecznienie[83]:", ":="Archiwizowane_parametry".Naslonecznienie[84]:", ":="Archiwizowane_parametry".Naslonecznienie[85]:", ":="Archiwizowane_parametry".Naslonecznienie[86]:", ":="Archiwizowane_parametry".Naslonecznienie[87]:", ":="Archiwizowane_parametry".Naslonecznienie[88]:", ":="Archiwizowane_parametry".Naslonecznienie[89]:", ":="Archiwizowane_parametry".Naslonecznienie[90]:", ":="Archiwizowane_parametry".Naslonecznienie[91]:", ":="Archiwizowane_parametry".Naslonecznienie[92]:", ":="Archiwizowane_parametry".Naslonecznienie[93]:", ":="Archiwizowane_parametry".Naslonecznienie[94]:", ":="Archiwizowane_parametry".Naslonecznienie[95]:", ":="Archiwizowane_parametry".Naslonecznienie[96]:", ":="Archiwizowane_parametry".Naslonecznienie[97]:", ":="Archiwizowane_parametry".Naslonecznienie[98]:", ":="Archiwizowane_parametry".Naslonecznienie[99]:", ":="Archiwizowane_parametry".Naslonecznienie[100]:", ":="Archiwizowane_parametry".Naslonecznienie[101]:", ":="Archiwizowane_parametry".Naslonecznienie[102]:", ":="Archiwizowane_parametry".Naslonecznienie[103]:", ":="Archiwizowane_parametry".Naslonecznienie[104]:", ":="Archiwizowane_parametry".Naslonecznienie[105]:", ":="Archiwizowane_parametry".Naslonecznienie[106]:", ":="Archiwizowane_parametry".Naslonecznienie[107]:", ":="Archiwizowane_parametry".Naslonecznienie[108]:", ":="Archiwizowane_parametry".Naslonecznienie[109]:", ":="Archiwizowane_parametry".Naslonecznienie[110]:", ":="Archiwizowane_parametry".Naslonecznienie[111]:"];
+    const wilgotnosc = [":="Archiwizowane_parametry".Wilgotnosc[0]:", ":="Archiwizowane_parametry".Wilgotnosc[1]:", ":="Archiwizowane_parametry".Wilgotnosc[2]:", ":="Archiwizowane_parametry".Wilgotnosc[3]:", ":="Archiwizowane_parametry".Wilgotnosc[4]:", ":="Archiwizowane_parametry".Wilgotnosc[5]:", ":="Archiwizowane_parametry".Wilgotnosc[6]:", ":="Archiwizowane_parametry".Wilgotnosc[7]:", ":="Archiwizowane_parametry".Wilgotnosc[8]:", ":="Archiwizowane_parametry".Wilgotnosc[9]:", ":="Archiwizowane_parametry".Wilgotnosc[10]:", ":="Archiwizowane_parametry".Wilgotnosc[11]:", ":="Archiwizowane_parametry".Wilgotnosc[12]:", ":="Archiwizowane_parametry".Wilgotnosc[13]:", ":="Archiwizowane_parametry".Wilgotnosc[14]:", ":="Archiwizowane_parametry".Wilgotnosc[15]:", ":="Archiwizowane_parametry".Wilgotnosc[16]:", ":="Archiwizowane_parametry".Wilgotnosc[17]:", ":="Archiwizowane_parametry".Wilgotnosc[18]:", ":="Archiwizowane_parametry".Wilgotnosc[19]:", ":="Archiwizowane_parametry".Wilgotnosc[20]:", ":="Archiwizowane_parametry".Wilgotnosc[21]:", ":="Archiwizowane_parametry".Wilgotnosc[22]:", ":="Archiwizowane_parametry".Wilgotnosc[23]:", ":="Archiwizowane_parametry".Wilgotnosc[24]:", ":="Archiwizowane_parametry".Wilgotnosc[25]:", ":="Archiwizowane_parametry".Wilgotnosc[26]:", ":="Archiwizowane_parametry".Wilgotnosc[27]:", ":="Archiwizowane_parametry".Wilgotnosc[28]:", ":="Archiwizowane_parametry".Wilgotnosc[29]:", ":="Archiwizowane_parametry".Wilgotnosc[30]:", ":="Archiwizowane_parametry".Wilgotnosc[31]:", ":="Archiwizowane_parametry".Wilgotnosc[32]:", ":="Archiwizowane_parametry".Wilgotnosc[33]:", ":="Archiwizowane_parametry".Wilgotnosc[34]:", ":="Archiwizowane_parametry".Wilgotnosc[35]:", ":="Archiwizowane_parametry".Wilgotnosc[36]:", ":="Archiwizowane_parametry".Wilgotnosc[37]:", ":="Archiwizowane_parametry".Wilgotnosc[38]:", ":="Archiwizowane_parametry".Wilgotnosc[39]:", ":="Archiwizowane_parametry".Wilgotnosc[40]:", ":="Archiwizowane_parametry".Wilgotnosc[41]:", ":="Archiwizowane_parametry".Wilgotnosc[42]:", ":="Archiwizowane_parametry".Wilgotnosc[43]:", ":="Archiwizowane_parametry".Wilgotnosc[44]:", ":="Archiwizowane_parametry".Wilgotnosc[45]:", ":="Archiwizowane_parametry".Wilgotnosc[46]:", ":="Archiwizowane_parametry".Wilgotnosc[47]:", ":="Archiwizowane_parametry".Wilgotnosc[48]:", ":="Archiwizowane_parametry".Wilgotnosc[49]:", ":="Archiwizowane_parametry".Wilgotnosc[50]:", ":="Archiwizowane_parametry".Wilgotnosc[51]:", ":="Archiwizowane_parametry".Wilgotnosc[52]:", ":="Archiwizowane_parametry".Wilgotnosc[53]:", ":="Archiwizowane_parametry".Wilgotnosc[54]:", ":="Archiwizowane_parametry".Wilgotnosc[55]:", ":="Archiwizowane_parametry".Wilgotnosc[56]:", ":="Archiwizowane_parametry".Wilgotnosc[57]:", ":="Archiwizowane_parametry".Wilgotnosc[58]:", ":="Archiwizowane_parametry".Wilgotnosc[59]:", ":="Archiwizowane_parametry".Wilgotnosc[60]:", ":="Archiwizowane_parametry".Wilgotnosc[61]:", ":="Archiwizowane_parametry".Wilgotnosc[62]:", ":="Archiwizowane_parametry".Wilgotnosc[63]:", ":="Archiwizowane_parametry".Wilgotnosc[64]:", ":="Archiwizowane_parametry".Wilgotnosc[65]:", ":="Archiwizowane_parametry".Wilgotnosc[66]:", ":="Archiwizowane_parametry".Wilgotnosc[67]:", ":="Archiwizowane_parametry".Wilgotnosc[68]:", ":="Archiwizowane_parametry".Wilgotnosc[69]:", ":="Archiwizowane_parametry".Wilgotnosc[70]:", ":="Archiwizowane_parametry".Wilgotnosc[71]:", ":="Archiwizowane_parametry".Wilgotnosc[72]:", ":="Archiwizowane_parametry".Wilgotnosc[73]:", ":="Archiwizowane_parametry".Wilgotnosc[74]:", ":="Archiwizowane_parametry".Wilgotnosc[75]:", ":="Archiwizowane_parametry".Wilgotnosc[76]:", ":="Archiwizowane_parametry".Wilgotnosc[77]:", ":="Archiwizowane_parametry".Wilgotnosc[78]:", ":="Archiwizowane_parametry".Wilgotnosc[79]:", ":="Archiwizowane_parametry".Wilgotnosc[80]:", ":="Archiwizowane_parametry".Wilgotnosc[81]:", ":="Archiwizowane_parametry".Wilgotnosc[82]:", ":="Archiwizowane_parametry".Wilgotnosc[83]:", ":="Archiwizowane_parametry".Wilgotnosc[84]:", ":="Archiwizowane_parametry".Wilgotnosc[85]:", ":="Archiwizowane_parametry".Wilgotnosc[86]:", ":="Archiwizowane_parametry".Wilgotnosc[87]:", ":="Archiwizowane_parametry".Wilgotnosc[88]:", ":="Archiwizowane_parametry".Wilgotnosc[89]:", ":="Archiwizowane_parametry".Wilgotnosc[90]:", ":="Archiwizowane_parametry".Wilgotnosc[91]:", ":="Archiwizowane_parametry".Wilgotnosc[92]:", ":="Archiwizowane_parametry".Wilgotnosc[93]:", ":="Archiwizowane_parametry".Wilgotnosc[94]:", ":="Archiwizowane_parametry".Wilgotnosc[95]:", ":="Archiwizowane_parametry".Wilgotnosc[96]:", ":="Archiwizowane_parametry".Wilgotnosc[97]:", ":="Archiwizowane_parametry".Wilgotnosc[98]:", ":="Archiwizowane_parametry".Wilgotnosc[99]:", ":="Archiwizowane_parametry".Wilgotnosc[100]:", ":="Archiwizowane_parametry".Wilgotnosc[101]:", ":="Archiwizowane_parametry".Wilgotnosc[102]:", ":="Archiwizowane_parametry".Wilgotnosc[103]:", ":="Archiwizowane_parametry".Wilgotnosc[104]:", ":="Archiwizowane_parametry".Wilgotnosc[105]:", ":="Archiwizowane_parametry".Wilgotnosc[106]:", ":="Archiwizowane_parametry".Wilgotnosc[107]:", ":="Archiwizowane_parametry".Wilgotnosc[108]:", ":="Archiwizowane_parametry".Wilgotnosc[109]:", ":="Archiwizowane_parametry".Wilgotnosc[110]:", ":="Archiwizowane_parametry".Wilgotnosc[111]:"];
+
+    // Przykładowa oś czasu (co godzine przez tydzień)
+    const labels = Array.from({ length: 112 }, (_, i) => {
+      const day = Math.floor(i / 16); // 16 pomiarow na dzień
+      const hour = Math.floor((i % 16) * 1.5);
+      const minute = (i % 16) % 2
+
+if (hour == 0) {
+    return `${7 - day} dni temu`;
+  } else if (day == 6) {
+    return `${minute === 0 ? (24 - hour) : (24 - 1 - hour)}:${minute === 0 ? '00' : '30'} godzin temu`;
+  } else {
+    return `${7 - 1 - day} dni i ${minute === 0 ? (24 - hour) : (24 - 1 - hour)}:${minute === 0 ? '00' : '30'} godzin temu`;
+  } 
+    });
+
+    const ctx = document.getElementById('paramChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Temperatura [°C]',
+            data: temperatura,
+            yAxisID: 'yTemp',
+            borderColor: 'red',
+            fill: false,
+            tension: 0.3,
+          },
+          {
+            label: 'Nasłonecznienie [W/m²]',
+            data: naslonecznienie,
+            yAxisID: 'ySun',
+            borderColor: 'gold',
+            fill: false,
+            tension: 0.3,
+          },
+          {
+            label: 'Wilgotność [%]',
+            data: wilgotnosc,
+            yAxisID: 'yHum',
+            borderColor: 'blue',
+            fill: false,
+            tension: 0.3,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            display: true,
+            title: {
+              display: true,
+              text: 'Czas',
+            },
+            ticks: {
+              maxTicksLimit: 14, // ogranicz ilość etykiet na osi X
+            }
+          },
+          yTemp: {
+            type: 'linear',
+            position: 'left',
+            title: {
+              display: true,
+              text: 'Temperatura [°C]'
+            }
+          },
+          ySun: {
+            type: 'linear',
+            position: 'right',
+            title: {
+              display: true,
+              text: 'Nasłonecznienie [W/m²]'
+            },
+            grid: {
+              drawOnChartArea: false
+            }
+          },
+          yHum: {
+            type: 'linear',
+            position: 'right',
+            offset: true,
+            title: {
+              display: true,
+              text: 'Wilgotność [%]'
+            },
+            grid: {
+              drawOnChartArea: false
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          }
+        },
+        interaction: {
+          mode: 'nearest',
+          axis: 'x',
+          intersect: false
+        }
+      }
+    });
+  </script>
+</body>
+</html>
